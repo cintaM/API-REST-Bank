@@ -15,26 +15,16 @@ public class SavingDTO {
 
     private Long minimumBalance;
 
-    private Double monthlyMaintenanceFee;
+    private double monthlyMaintenanceFee;
 
     private Status status;
 
-    private Type type;
-
-    private Long holderId;
 
 
 
-    public AccountDTO(Long balance, Long primaryOwnerId, Long secondaryOwnerId, double penaltyFee, Long creditLimit, double interestRate) {
-        this.balance = balance;
-        this.primaryOwnerId = primaryOwnerId;
-        this.secondaryOwnerId = secondaryOwnerId;
-        this.penaltyFee = penaltyFee;
-        this.creditLimit = creditLimit;
-        this.interestRate = interestRate;
-    }
 
-   /* public AccountDTO(Long balance, Long primaryOwnerId, Long secondaryOwnerId, double penaltyFee, String secretKey, Long minimumBalance, double monthlyMaintenanceFee, Status status, Type type) {
+
+    public SavingDTO(Long balance, Long primaryOwnerId, Long secondaryOwnerId, double penaltyFee, String secretKey, Long minimumBalance, double monthlyMaintenanceFee, Status status) {
         this.balance = balance;
         this.primaryOwnerId = primaryOwnerId;
         this.secondaryOwnerId = secondaryOwnerId;
@@ -43,28 +33,8 @@ public class SavingDTO {
         this.minimumBalance = minimumBalance;
         this.monthlyMaintenanceFee = monthlyMaintenanceFee;
         this.status = status;
-        this.type = type;
     }
-    public AccountDTO(Long balance, Long primaryOwnerId, Long secondaryOwnerId, double penaltyFee, String secretKey, Long minimumBalance, Status status, double interestRate) {
-        this.balance = balance;
-        this.primaryOwnerId = primaryOwnerId;
-        this.secondaryOwnerId = secondaryOwnerId;
-        this.penaltyFee = penaltyFee;
-        this.secretKey = secretKey;
-        this.minimumBalance = minimumBalance;
-        this.status = status;
-        this.interestRate = interestRate;
-    }
-    public AccountDTO(Long balance, Long primaryOwnerId, Long secondaryOwnerId, double penaltyFee, String secretKey, Status status, Type type) {
-        this.balance = balance;
-        this.primaryOwnerId = primaryOwnerId;
-        this.secondaryOwnerId = secondaryOwnerId;
-        this.penaltyFee = penaltyFee;
-        this.secretKey = secretKey;
-        this.status = status;
-        this.type = type;
-    }
-    */
+
 
     public Long getBalance() {
         return balance;
@@ -134,13 +104,13 @@ public class SavingDTO {
         this.minimumBalance = minimumBalance;
     }
 
- /*   public double getMonthlyMaintenanceFee() {
+   public double getMonthlyMaintenanceFee() {
         return monthlyMaintenanceFee;
     }
     public void setMonthlyMaintenanceFee(double monthlyMaintenanceFee) {
         this.monthlyMaintenanceFee = monthlyMaintenanceFee;
     }
-  */
+
 
     public Status getStatus() {
         return status;
@@ -150,14 +120,7 @@ public class SavingDTO {
         this.status = status;
     }
 
-    public Types getType() {
-        return type;
-    }
-
-    public void setType(Types type) {
-        this.type = type;
-    }
 
 
 }
-}
+

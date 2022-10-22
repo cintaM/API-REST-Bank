@@ -8,11 +8,11 @@ public interface CreditCardsControllerInterface {
 
     CreditCards addCreditCards(CreditCards creditCards);
 
-     /* Optional<CreditCards> updateCreditCardsBalance(Long id, Money balance);
+     CreditCards updateCreditCardsBalance(Long id, Money balance);
 
-    Optional<CreditCards> deleteCreditCards(CreditCards creditCards);
+    CreditCards> deleteCreditCards(CreditCards creditCards);
 
-      */
+
 
 
 }
