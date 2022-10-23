@@ -23,7 +23,7 @@ public class Saving extends Accounts {
             @AttributeOverride(name = "amount", column = @Column(name = "minimum_balance")),
             @AttributeOverride(name = "currency", column = @Column(name = "minimum_balance_currency"))
     })
-    @Min(100)
+
     private Money minimumBalance  ;
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -42,14 +42,6 @@ public class Saving extends Accounts {
 
     public Saving(Money balance, Holders primaryOwner, Holders secondaryOwner, BigDecimal penaltyFee, Long id1, String secretKey, Money minimumBalance, Status status, Admins admins, BigDecimal interestRate) {
         super(balance, primaryOwner, secondaryOwner, penaltyFee);
-        this.secretKey = secretKey;
-        this.minimumBalance = minimumBalance;
-        this.status = status;
-        this.admins = admins;
-        this.interestRate = interestRate;
-    }
-
-    public Saving( String secretKey, Money minimumBalance, Status status, Admins admins, BigDecimal interestRate) {
         this.secretKey = secretKey;
         this.minimumBalance = minimumBalance;
         this.status = status;

@@ -6,6 +6,7 @@ import com.ironhack.Bank.entity.Embeddable.Money;
 import com.ironhack.Bank.entity.UsersType.Holders;
 import com.ironhack.Bank.entity.UsersType.Users;
 import com.ironhack.Bank.enums.Status;
+import com.ironhack.Bank.enums.Types;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -24,6 +25,9 @@ public class Checking extends Accounts {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Enumerated(EnumType.STRING)
+    private Types types;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "admins_id")
@@ -33,22 +37,22 @@ public class Checking extends Accounts {
     public Checking() {
     }
 
-
-    public Checking(Money balance, Holders primaryOwner, Holders secondaryOwner, BigDecimal penaltyFee, String secretKey, Money minimumBalance, BigDecimal monthlyMaintenanceFee, Status status, Admins admins) {
+    public Checking(Money balance, Holders primaryOwner, Holders secondaryOwner, BigDecimal penaltyFee, String secretKey, Money minimumBalance, BigDecimal monthlyMaintenanceFee, Status status, Types types) {
         super(balance, primaryOwner, secondaryOwner, penaltyFee);
         this.secretKey = secretKey;
         this.minimumBalance = minimumBalance;
         this.monthlyMaintenanceFee = monthlyMaintenanceFee;
         this.status = status;
-        this.admins = admins;
+        this.types = types;
     }
 
-    public Checking(String secretKey, Money minimumBalance, BigDecimal monthlyMaintenanceFee, Status status, Admins admins) {
+
+    public Checking(Money balance, Holders primaryOwner, Holders secondaryOwner, BigDecimal penaltyFee, String secretKey, Money minimumBalance, Status status, Types types) {
+        super(balance, primaryOwner, secondaryOwner, penaltyFee);
         this.secretKey = secretKey;
         this.minimumBalance = minimumBalance;
-        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
         this.status = status;
-        this.admins = admins;
+        this.types = types;
     }
 
     public String getSecretKey() {

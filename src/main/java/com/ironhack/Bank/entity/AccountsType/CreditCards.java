@@ -18,12 +18,10 @@ public class CreditCards extends Accounts {
             @AttributeOverride(name = "currency", column = @Column(name = "credit_limit_currency"))
     })
     @NotNull
-   // @Min(100)
-   // @Max(10000)
     private Money creditLimit;
 
-   // @DecimalMax("0.2")
-   // @DecimalMin("0.1")
+    @DecimalMax("0.2")
+   @DecimalMin("0.1")
     private BigDecimal interestRate;
 
     @ManyToOne

@@ -1,31 +1,52 @@
 package com.ironhack.Bank.controllers.UsersType;
 
 import com.ironhack.Bank.controllers.interfaces.UsersType.HoldersControllerInterface;
+import com.ironhack.Bank.entity.Embeddable.PrimaryAddress;
+import com.ironhack.Bank.entity.UsersType.Holders;
+import com.ironhack.Bank.services.UsersType.HoldersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class HoldersController implements HoldersControllerInterface {
 
 
-   /* @Override
-    public Holders sacardinero() {
-        return null;
+    @Autowired
+    HoldersService holdersService;
+
+
+
+    @PostMapping("/holder/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Holders addHolder(@RequestBody Holders holders)  {
+        return holdersService.addHolders(holders);
+
     }
 
-    @Override
-    public Holders ponerdinero() {
-        return null;
+
+    @PatchMapping("/holder/patch/{id}")
+    public Holders updateHolderPrimaryAddress(@PathVariable Long id, @RequestBody PrimaryAddress primaryAddress) {
+        return holdersService.updateHolderPrimaryAddress(id, primaryAddress);
     }
 
-    @Override
-    public Holders tranferirdinero() {
-        return null;
+    @DeleteMapping("/holder/delete/")
+    public Holders deleteHolder(@RequestBody Holders holders) {
+        return holdersService.deleteHolder(holders);
     }
 
-    @Override
-    public Holders accederasusdatos() {
-        return null;
-    }
-    */
+
+  @GetMapping("/holder/getall")
+    public List<Holders> getAllHolder(){
+        return holdersService.GetAllHolder();
+  }
+
+  @GetMapping("/holder/get/{id}")
+    public Holders getOneHolder(@PathVariable Long id, @RequestBody Holders holders){
+        return  holdersService.getOneHolder(id, holders);
+  }
+
 }
 

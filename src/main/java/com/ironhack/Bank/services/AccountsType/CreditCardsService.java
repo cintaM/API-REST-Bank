@@ -1,6 +1,8 @@
 package com.ironhack.Bank.services.AccountsType;
 
+import com.ironhack.Bank.controllers.DTOs.CheckingDTO;
 import com.ironhack.Bank.controllers.DTOs.CreditDTO;
+import com.ironhack.Bank.entity.AccountsType.Checking;
 import com.ironhack.Bank.entity.AccountsType.CreditCards;
 import com.ironhack.Bank.entity.Embeddable.Money;
 import com.ironhack.Bank.entity.UsersType.Holders;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class CreditCardsService {
@@ -22,43 +25,45 @@ public class CreditCardsService {
     HoldersRepository holdersRepository;
 
 
-    public CreditCards addCreditCards(CreditCards creditCards) {
-        if (creditCardsRepository.findById(creditCards.getId()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+    public Checking addChecking(CheckingDTO checkingDTO) {
+        Money balance = new Money(BigDecimal.valueOf(checkingDTO.getBalance()));
+        Holders primaryOwner = holdersRepository.findById(checkingDTO.getPrimaryOwnerId()).get();
+        Holders secondaryOwner = null;
+        if(checkingDTO.getSecondaryOwnerId() != null){
+            secondaryOwner = holdersRepository.findById(checkingDTO.getSecondaryOwnerId()).get();
         }
-        return creditCardsRepository.save(creditCards);
+        BigDecimal penaltyFee = BigDecimal.valueOf(checkingDTO.getPenaltyFee());
+        Money creditLimit = new Money(BigDecimal.valueOf(checkingDTO.getCreditLimit()));
+        BigDecimal interestRate = BigDecimal.valueOf(checkingDTO.getInterestRate());
+        Money minimumbBalance = new Money(BigDecimal.valueOf(checkingDTO.getMinimumBalance()));
+        BigDecimal monthlyMaintenanceFee = BigDecimal.valueOf(checkingDTO.getMonthlyMaintenanceFee());
+        Checking checking = new Checking(balance, primaryOwner, primaryOwner, penaltyFee, checkingDTO.getSecretKey(), minimumbBalance, monthlyMaintenanceFee, checkingDTO.getStatus(), checkingDTO.getType());
+        return checkingRepository.save(checking);
     };
 
-    public CreditCards addCreditCards2(CreditDTO creditCards) {
-        Money balance = new Money(BigDecimal.valueOf(creditCards.getBalance()));
-        Holders primaryOwner = holdersRepository.findById(creditCards.getPrimaryOwnerId()).get();
-        Holders secondaryOwner = null;
-        if(creditCards.getSecondaryOwnerId() != null){
-            secondaryOwner = holdersRepository.findById(creditCards.getSecondaryOwnerId()).get();
-        }
-        BigDecimal penaltyFee = BigDecimal.valueOf(creditCards.getPenaltyFee());
-        Money creaditLimit = new Money(BigDecimal.valueOf(creditCards.getCreditLimit()));
-        BigDecimal interestRate = BigDecimal.valueOf(creditCards.getInterestRate());
-        CreditCards creditCards1 = new CreditCards(balance,primaryOwner, secondaryOwner, penaltyFee, creaditLimit, interestRate);
-        return creditCardsRepository.save(creditCards1);
-    };
-/*
-        public CreditCards updateCreditCardsBalance(Long id, Money balance) {
-        CreditCards creditCard = creditCardsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        creditCard.setBalance(balance);
-        return creditCardsRepository.save(creditCard);
+    public Checking updateCheckingBalance(Long id, Money balance) {
+        Checking checking = checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        checking.setBalance(balance);
+        return checkingRepository.save(checking);
 
     }
 
- */
-   /*  public Optional<CreditCards> deleteCreditCards(CreditCards creditCards) {
-        if (creditCardsRepository.findById(creditCards.getId()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return creditCardsRepository.delete();
-     };
 
-    */
+    public Checking deleteChecking(Long id) {
+        Checking checking = checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return checkingRepository.delete(checking);
+    };
+
+
+    public List<Checking> getAllChecking(){
+        return checkingRepository.findAll();
+    }
+
+    public Checking getOneChecking(Long id){
+        Checking checking = checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return checking;
+    }
 
 
 

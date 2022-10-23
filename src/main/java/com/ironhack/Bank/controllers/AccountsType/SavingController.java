@@ -1,42 +1,51 @@
 package com.ironhack.Bank.controllers.AccountsType;
 
 import com.ironhack.Bank.controllers.DTOs.CreditDTO;
+import com.ironhack.Bank.controllers.DTOs.SavingDTO;
 import com.ironhack.Bank.controllers.interfaces.AccountsType.SavingControllerInterface;
 import com.ironhack.Bank.entity.AccountsType.CreditCards;
+import com.ironhack.Bank.entity.Embeddable.Money;
+import com.ironhack.Bank.entity.UsersType.ThirdParty;
 import com.ironhack.Bank.services.AccountsType.CreditCardsService;
+import com.ironhack.Bank.services.AccountsType.SavingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RestController
 public class SavingController implements SavingControllerInterface {
 
     @Autowired
-    CreditCardsService creditCardService;
+    SavingService savingService;
 
 
-    @PostMapping("/creditcards")
+    @PostMapping("/saving/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public CreditCards addCreditCards(@RequestBody CreditCards creditCards)  {
-        return creditCardService.addCreditCards(creditCards);
+    public SavingDTO addSaving(@RequestBody SavingDTO savingDTO)  {
+        return savingService.addSaving(savingDTO);
 
     }
 
 
-    @PostMapping("/creditcards2")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CreditCards addCreditCards2(@RequestBody CreditDTO creditCards)  {
-        return creditCardService.addCreditCards2(creditCards);
-
-    }
-
-
-    @PatchMapping("/creditcards/{id}")
-    public CreditCards updateCreditCardsBalance(@PathVariable Long id, @RequestBody Money balance) {
-        return creditCardService.updateCreditCardsBalance(id, new Money());
+    @PatchMapping("/saving/{id}")
+    public SavingDTO updateCreditCardsBalance(@PathVariable Long id, @RequestBody Money balance) {
+        return savingService.updateSavingBalance(id, balance);
     }
 
     @DeleteMapping("/deleteCreditCards")
-    public CreditCards deleteCreditCards(@RequestBody CreditCards creditCards) {
-        return creditCardService.deleteCreditCards(creditCards);
+    public SavingDTO deleteCreditCards(@RequestBody SavingDTO savingDTO) {
+        return savingService.deleteSaving(savingDTO);
+    }
+
+    @GetMapping("/thirdparty/getall")
+    public List<SavingDTO> getAllSaving(){
+        return savingService.getAllThirdParty();
+    }
+
+    @GetMapping("/thirdparty/get/{id}")
+    public SavingDTO getOneSaving(@PathVariable Long id, @RequestBody SavingDTO savingDTO){
+        return  savingService.getOneThirdParty(id, savingDTO);
     }
 }

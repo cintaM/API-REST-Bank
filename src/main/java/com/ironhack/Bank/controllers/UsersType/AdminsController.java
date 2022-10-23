@@ -9,20 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AdminsController implements AdminsControllerInterface {
 
-    @Autowired
-    AdminsRepository adminsRepository;
 
-    @Autowired
-    CheckingService checkingRepository;
-
-
-  /*  @PostMapping("/checking")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Optional<Checking> addChecking(@RequestBody Checking checking) {
-        return Optional.ofNullable(checkingRepository.addChecking(checking));
-    }
-
-   */
 
 
 
