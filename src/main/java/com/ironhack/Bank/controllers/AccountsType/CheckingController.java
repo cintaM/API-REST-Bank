@@ -28,6 +28,12 @@ public class CheckingController implements CheckingControllerInterface {
     }
 
 
+
+
+
+
+
+
     @PatchMapping("/checking/patch/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Checking updateCheckingBalance(@PathVariable Long id, @RequestBody Long balance) {
@@ -50,6 +56,11 @@ public class CheckingController implements CheckingControllerInterface {
     @ResponseStatus(HttpStatus.OK)
     public List<Checking> getAllChecking(){
         return checkingService.getAllChecking();
+    }
+
+    @Override
+    public Checking updateChecking(Long id, Money balance) {
+        return null;
     }
 
     @GetMapping("/checking/get/{id}")

@@ -13,14 +13,14 @@ public interface CreditCardsControllerInterface {
 
     CreditCards addCreditCards(CreditDTO creditDTO);
 
-     CreditCards updateCreditCardsBalance(Long id, Money balance);
+     CreditCards updateCreditCardsBalance(Long id, Long balance);
 
-    CreditCards deleteCreditCards(CreditCards creditCards);
+   void deleteCreditCards(CreditCards creditCards);
 
 
-    CreditCards  getOneCreditCards(Long id, CreditDTO creditDTO);
+    CreditCards  getOneCreditCards(Long id);
     List<CreditCards > getAllCreditCards();
 
-    CreditCards  updateCreditCars(Long id, Money balance);
+    CreditCards  updateCreditCards(Long id, CreditCards creditCards);
 
 }

@@ -13,12 +13,12 @@ public interface CheckingControllerInterface {
 
     Checking addChecking(CheckingDTO checkingDTO);
 
-    Checking updateCheckingBalance(Long id, Money balance);
+    Checking updateCheckingBalance(Long id, Long balance);
 
-    Checking deleteChecking(CheckingDTO checkingDTO);
+   void deleteChecking(Checking checking);
 
 
-    Checking getOneChecking(Long id, CheckingDTO checkingDTO);
+    Checking getOneChecking(Long id);
     List<Checking> getAllChecking();
 
     Checking updateChecking(Long id, Money balance);

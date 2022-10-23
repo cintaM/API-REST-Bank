@@ -35,24 +35,26 @@ public class CreditCardsController implements CreditCardsControllerInterface {
         return creditCardService.updateCreditCardsBalance(id, new Money(BigDecimal.valueOf(balance)));
     }
 
-   @DeleteMapping("/creditcard/delete/")
-    public CreditCards deleteCreditCards() {
-        return creditCardService.deleteCreditCards();
+
+
+    @DeleteMapping("/creditcard/delete/")
+    public void deleteCreditCards(CreditCards creditCards) {
+        creditCardService.deleteCreditCards(creditCards);
     }
 
 
     @PutMapping("/creditcards/put/{id}")
     public CreditCards updateCreditCards(@PathVariable Long id, @RequestBody CreditCards creditCards) {
-        return creditCardService.updateCreditCardsBalance(id, creditCards);
+        return creditCardService.updateCreditCards(id, creditCards);
     }
 
     @GetMapping("/creditcards/getall")
-    public List<CreditCards> getAllThirdParty(){
+    public List<CreditCards> getAllCreditCards(){
         return creditCardService.getAllCreditCards();
     }
 
     @GetMapping("/creditcards/get/{id}")
-    public CreditCards getOneThirdParty(@PathVariable Long id){
+    public CreditCards getOneCreditCards(@PathVariable Long id){
         return  creditCardService.getOneCreditCards(id);
     }
 

@@ -37,16 +37,22 @@ public class SavingController implements SavingControllerInterface {
     }
 
     @DeleteMapping("/saving/delete/")
-    public Saving deleteCreditCards() {
-        return savingService.deleteSaving();
+    public void deleteSaving(Saving saving) {
+        savingService.deleteSaving(saving);
     }
 
-    @GetMapping("/thirdparty/getall")
+    @GetMapping("/saving/getall")
     public List<Saving> getAllSaving(){
         return savingService.getAllSaving();
     }
 
-    @GetMapping("/thirdparty/get/{id}")
+    @PutMapping("/saving/put/{id}")
+    public Saving updateCreditCards(@PathVariable Long id, @RequestBody Saving saving) {
+        return savingService.updateSaving(id,saving);
+    }
+
+
+    @GetMapping("/saving/get/{id}")
     public Saving getOneSaving(@PathVariable Long id){
         return  savingService.getOneSaving(id);
     }

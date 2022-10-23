@@ -12,13 +12,13 @@ public interface SavingControllerInterface {
 
     Saving addSaving(SavingDTO savingDTO);
 
-    Saving updateSavingBalance(Long id, Money balance);
+    Saving updateSavingBalance(Long id, Long balance);
 
-    Saving deleteSaving();
+    void deleteSaving(Saving saving);
 
-    Saving  getOneSaving(Long id, SavingDTO savingDTO);
+    Saving  getOneSaving(Long id, Saving saving);
     List< Saving > getAllSaving();
 
-    Saving  updateSaving(Long id, Money balance);
+    Saving  updateSaving(Long id);
 
 }
