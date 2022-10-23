@@ -4,6 +4,7 @@ import com.ironhack.Bank.controllers.DTOs.CreditDTO;
 import com.ironhack.Bank.controllers.DTOs.SavingDTO;
 import com.ironhack.Bank.controllers.interfaces.AccountsType.SavingControllerInterface;
 import com.ironhack.Bank.entity.AccountsType.CreditCards;
+import com.ironhack.Bank.entity.AccountsType.Saving;
 import com.ironhack.Bank.entity.Embeddable.Money;
 import com.ironhack.Bank.entity.UsersType.ThirdParty;
 import com.ironhack.Bank.services.AccountsType.CreditCardsService;
@@ -23,7 +24,7 @@ public class SavingController implements SavingControllerInterface {
 
     @PostMapping("/saving/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public SavingDTO addSaving(@RequestBody SavingDTO savingDTO)  {
+    public Saving addSaving(@RequestBody SavingDTO savingDTO)  {
         return savingService.addSaving(savingDTO);
 
     }
@@ -34,18 +35,18 @@ public class SavingController implements SavingControllerInterface {
         return savingService.updateSavingBalance(id, balance);
     }
 
-    @DeleteMapping("/deleteCreditCards")
-    public SavingDTO deleteCreditCards(@RequestBody SavingDTO savingDTO) {
-        return savingService.deleteSaving(savingDTO);
+    @DeleteMapping("/saving/delete/{id}")
+    public Saving deleteCreditCards(@PathVariable Long id) {
+        return savingService.deleteSaving(id);
     }
 
     @GetMapping("/thirdparty/getall")
-    public List<SavingDTO> getAllSaving(){
-        return savingService.getAllThirdParty();
+    public List<Saving> getAllSaving(){
+        return savingService.getAllSaving();
     }
 
     @GetMapping("/thirdparty/get/{id}")
-    public SavingDTO getOneSaving(@PathVariable Long id, @RequestBody SavingDTO savingDTO){
-        return  savingService.getOneThirdParty(id, savingDTO);
+    public Saving getOneSaving(@PathVariable Long id, @RequestBody Saving saving){
+        return  savingService.getOneSaving(id, saving);
     }
 }

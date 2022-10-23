@@ -24,29 +24,27 @@ public class ThirdPartyService implements ThirdPartyServiceInterface {
     @Autowired
     ThirdPartyRepository thirdPartyRepository;
 
-    public CreditCards addCreditCards(CreditCards creditCards) {
-        if (creditCardsRepository.findById(creditCards.getId()).isPresent()){
+    public ThirdParty addThirdParty(ThirdParty thirdParty) {
+        if (thirdPartyRepository.findById(thirdParty.getId()).isPresent()){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        return creditCardsRepository.save(creditCards);
+        return thirdPartyRepository.save(thirdParty);
     };
 
 
-
-
-    public Checking deleteChecking(Long id) {
-        Checking checking = checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return checkingRepository.delete(checking);
+    public ThirdParty deleteThirdParty(Long id) {
+        ThirdParty thirdParty = thirdPartyRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return thirdPartyRepository.delete(thirdParty);
     };
 
 
-    public List<Checking> getAllChecking(){
-        return checkingRepository.findAll();
+    public List<ThirdParty> getAllThirdParty(){
+        return thirdPartyRepository.findAll();
     }
 
-    public Checking getOneChecking(Long id){
-        Checking checking = checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return checking;
+    public ThirdParty getOneThirdParty(Long id){
+        ThirdParty thirdParty = thirdPartyRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return thirdParty;
     }
 
 

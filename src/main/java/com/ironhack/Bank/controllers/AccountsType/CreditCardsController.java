@@ -47,12 +47,12 @@ public class CreditCardsController implements CreditCardsControllerInterface {
 
     @GetMapping("/creditcards/getall")
     public List<CreditCards> getAllThirdParty(){
-        return creditCardService.getAllThirdParty();
+        return creditCardService.getAllCreditCards();
     }
 
     @GetMapping("/creditcards/get/{id}")
-    public CreditCards getOneThirdParty(@PathVariable Long id, @RequestBody CreditCards creditCards){
-        return  creditCardService.getOneThirdParty(id, creditCards);
+    public CreditCards getOneThirdParty(@PathVariable Long id){
+        return  creditCardService.getOneCreditCards(id);
     }
 
 }

@@ -26,43 +26,41 @@ public class CreditCardsService {
 
 
 
-    public Checking addChecking(CheckingDTO checkingDTO) {
-        Money balance = new Money(BigDecimal.valueOf(checkingDTO.getBalance()));
-        Holders primaryOwner = holdersRepository.findById(checkingDTO.getPrimaryOwnerId()).get();
+    public CreditCards addCreditCards(CreditDTO creditCards) {
+        Money balance = new Money(BigDecimal.valueOf(creditCards.getBalance()));
+        Holders primaryOwner = holdersRepository.findById(creditCards.getPrimaryOwnerId()).get();
         Holders secondaryOwner = null;
-        if(checkingDTO.getSecondaryOwnerId() != null){
-            secondaryOwner = holdersRepository.findById(checkingDTO.getSecondaryOwnerId()).get();
+        if(creditCards.getSecondaryOwnerId() != null){
+            secondaryOwner = holdersRepository.findById(creditCards.getSecondaryOwnerId()).get();
         }
-        BigDecimal penaltyFee = BigDecimal.valueOf(checkingDTO.getPenaltyFee());
-        Money creditLimit = new Money(BigDecimal.valueOf(checkingDTO.getCreditLimit()));
-        BigDecimal interestRate = BigDecimal.valueOf(checkingDTO.getInterestRate());
-        Money minimumbBalance = new Money(BigDecimal.valueOf(checkingDTO.getMinimumBalance()));
-        BigDecimal monthlyMaintenanceFee = BigDecimal.valueOf(checkingDTO.getMonthlyMaintenanceFee());
-        Checking checking = new Checking(balance, primaryOwner, primaryOwner, penaltyFee, checkingDTO.getSecretKey(), minimumbBalance, monthlyMaintenanceFee, checkingDTO.getStatus(), checkingDTO.getType());
-        return checkingRepository.save(checking);
+        BigDecimal penaltyFee = BigDecimal.valueOf(creditCards.getPenaltyFee());
+        Money creditLimit = new Money(BigDecimal.valueOf(creditCards.getCreditLimit()));
+        BigDecimal interestRate = BigDecimal.valueOf(creditCards.getInterestRate());
+        CreditCards creditCards1 = new CreditCards(balance, primaryOwner, secondaryOwner, penaltyFee, creditLimit, interestRate);
+        return creditCardsRepository.save(creditCards1);
     };
 
-    public Checking updateCheckingBalance(Long id, Money balance) {
-        Checking checking = checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        checking.setBalance(balance);
-        return checkingRepository.save(checking);
+    public CreditCards updateCreditCardsBalance(Long id, Money balance) {
+        CreditCards creditCards = creditCardsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        creditCards.setBalance(balance);
+        return creditCardsRepository.save(creditCards);
 
     }
 
 
-    public Checking deleteChecking(Long id) {
-        Checking checking = checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return checkingRepository.delete(checking);
+    public CreditCards deleteCreditCards(Long id) {
+        CreditCards creditCards = creditCardsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return creditCardsRepository.delete(creditCards);
     };
 
 
-    public List<Checking> getAllChecking(){
-        return checkingRepository.findAll();
+    public List<CreditCards> getAllCreditCards(){
+        return creditCardsRepository.findAll();
     }
 
-    public Checking getOneChecking(Long id){
-        Checking checking = checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return checking;
+    public CreditCards getOneCreditCards(Long id){
+        CreditCards creditCards = creditCardsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return creditCards;
     }
 
 

@@ -40,7 +40,7 @@ public class Saving extends Accounts {
     public Saving() {
     }
 
-    public Saving(Money balance, Holders primaryOwner, Holders secondaryOwner, BigDecimal penaltyFee, Long id1, String secretKey, Money minimumBalance, Status status, Admins admins, BigDecimal interestRate) {
+    public Saving(Money balance, Holders primaryOwner, Holders secondaryOwner, BigDecimal penaltyFee, String secretKey, Money minimumBalance, Status status,BigDecimal interestRate) {
         super(balance, primaryOwner, secondaryOwner, penaltyFee);
         this.secretKey = secretKey;
         this.minimumBalance = minimumBalance;

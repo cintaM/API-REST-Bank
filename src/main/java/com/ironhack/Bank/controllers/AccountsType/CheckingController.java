@@ -35,8 +35,8 @@ public class CheckingController implements CheckingControllerInterface {
 
     @DeleteMapping("/checking/delete/")
     @ResponseStatus(HttpStatus.OK)
-    public Checking deleteChecking(@RequestBody CheckingDTO checkingDTO) {
-        return checkingService.deleteChecking(checkingDTO);
+    public Checking deleteChecking(@PathVariable Long id, @RequestBody CheckingDTO checkingDTO) {
+        return checkingService.deleteChecking(id);
     }
 
 
@@ -48,13 +48,13 @@ public class CheckingController implements CheckingControllerInterface {
     @GetMapping("/checking/getall")
     @ResponseStatus(HttpStatus.OK)
     public List<Checking> getAllChecking(){
-        return checkingService.getAllThirdParty();
+        return checkingService.getAllChecking();
     }
 
     @GetMapping("/checking/get/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Checking getOneChecking(@PathVariable Long id, @RequestBody CheckingDTO checkingDTO){
-        return  checkingService.getOneThirdParty(id, checkingDTO);
+        return  checkingService.getOneChecking(id, checkingDTO);
     }
 
 }
