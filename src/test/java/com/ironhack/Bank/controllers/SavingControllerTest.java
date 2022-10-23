@@ -3,10 +3,13 @@ package com.ironhack.Bank.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.ironhack.Bank.entity.AccountsType.CreditCards;
+import com.ironhack.Bank.entity.AccountsType.Saving;
 import com.ironhack.Bank.entity.Embeddable.Money;
 import com.ironhack.Bank.entity.Embeddable.PrimaryAddress;
 import com.ironhack.Bank.entity.UsersType.Holders;
+import com.ironhack.Bank.enums.Status;
 import com.ironhack.Bank.repositories.AccountsType.CreditCardsRepository;
+import com.ironhack.Bank.repositories.AccountsType.SavingRepository;
 import com.ironhack.Bank.respositories.UsersType.HoldersRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class SavingControllerTest {
     @Autowired
-    CreditCardsRepository creditCardRepository;
+    SavingRepository savingRepository;
 
     @Autowired
     HoldersRepository holdersRepository;
@@ -55,24 +58,23 @@ public class SavingControllerTest {
 
 
     @Test
-    void post_CreditCards_isCreated() throws Exception {
+    void post_Saving_isCreated() throws Exception {
         holder1 = holdersRepository.save(new Holders("Daniel", LocalDate.of(1985, 6, 26), new PrimaryAddress("ere", 2, "Barcelona"),
                 "ijil@gjdj.com"));
-
-        CreditCards creditCard1 = creditCardRepository.save(new CreditCards(new Money(BigDecimal.valueOf(1000)), holder1, holder1, BigDecimal.valueOf(2.25), new Money(BigDecimal.valueOf(654)), BigDecimal.valueOf(200)));
-        String body = objectMapper.writeValueAsString(creditCard1);
+        Saving saving = new Saving(new Money(BigDecimal.valueOf(350)), holder1, holder1, BigDecimal.valueOf(0.2), "asaas", new Money(BigDecimal.valueOf(620)), Status.ACTIVE, BigDecimal.valueOf(1.3));
+        String body = objectMapper.writeValueAsString(saving);
         System.out.println(body);
 
-        MvcResult mvcResult =mockMvc.perform(post("/creditcards/add").content(body).contentType(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult =mockMvc.perform(post("/saving/add").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(creditCardRepository.findById(2L).isPresent());
+        assertTrue(savingRepository.findById(2L).isPresent());
 
     }
 
     @Test
     void get_All_OK() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/creditcard/getall")).andExpect(status().isOk()).andReturn();
+        MvcResult mvcResult = mockMvc.perform(get("/saving/getall")).andExpect(status().isOk()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("0.2"));
 
         System.out.println(mvcResult.getResponse().getContentAsString());
@@ -81,7 +83,7 @@ public class SavingControllerTest {
 
     @Test
     void get_ById_OK() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/creditcard/getone/1")).andExpect(status().isOk()).andReturn();
+        MvcResult mvcResult = mockMvc.perform(get("/saving/getone/1")).andExpect(status().isOk()).andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("0.2"));
 
         System.out.println(mvcResult.getResponse().getContentAsString());
@@ -92,19 +94,18 @@ public class SavingControllerTest {
     void get_SetBalance_OK() throws Exception {
         holder1 = holdersRepository.save(new Holders("Daniel", LocalDate.of(1985, 6, 26), new PrimaryAddress("ere", 2, "Barcelona"),
                 "ijil@gjdj.com"));
-
-        CreditCards creditCard1 = creditCardRepository.save(new CreditCards(new Money(BigDecimal.valueOf(1000)), holder1, holder1, BigDecimal.valueOf(2.25), new Money(BigDecimal.valueOf(654)), BigDecimal.valueOf(200)));
-        creditCard1.setBalance(new Money(BigDecimal.valueOf(250)));
-        MvcResult mvcResult = mockMvc.perform(patch("/creditcard/patch/1")).andExpect(status().isOk()).andReturn();
+        Saving saving = new Saving(new Money(BigDecimal.valueOf(350)), holder1, holder1, BigDecimal.valueOf(0.2), "asaas", new Money(BigDecimal.valueOf(620)), Status.ACTIVE, BigDecimal.valueOf(1.3));
+        String body = objectMapper.writeValueAsString(saving);
+        MvcResult mvcResult = mockMvc.perform(patch("/saving/patch/1")).andExpect(status().isOk()).andReturn();
 
         System.out.println(mvcResult.getResponse().getContentAsString());
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("250"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("0.2"));
     }
 
     @Test
     void Delete_OK() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(delete("/creditcard/delete/1")).andExpect(status().isOk()).andReturn();
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("0.2"));
+        MvcResult mvcResult = mockMvc.perform(delete("/saving/delete/1")).andExpect(status().isOk()).andReturn();
+
 
         System.out.println(mvcResult.getResponse().getContentAsString());
 
