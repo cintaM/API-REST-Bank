@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -24,14 +25,14 @@ public class CreditCardsController implements CreditCardsControllerInterface {
     @PostMapping("/creditcard/add")
     @ResponseStatus(HttpStatus.CREATED)
     public CreditCards addCreditCards(@RequestBody CreditDTO creditCards)  {
-        return creditCardService.addCreditCards2(creditCards);
+        return creditCardService.addCreditCards(creditCards);
 
     }
 
 
     @PatchMapping("/creditcards/patch/{id}")
-    public CreditCards updateCreditCardsBalance(@PathVariable Long id, @RequestBody Money balance) {
-        return creditCardService.updateCreditCardsBalance(id, balance);
+    public CreditCards updateCreditCardsBalance(@PathVariable Long id, @RequestBody Long balance) {
+        return creditCardService.updateCreditCardsBalance(id, new Money(BigDecimal.valueOf(balance)));
     }
 
    @DeleteMapping("/creditcard/delete/")
@@ -41,8 +42,8 @@ public class CreditCardsController implements CreditCardsControllerInterface {
 
 
     @PutMapping("/creditcards/put/{id}")
-    public CreditCards updateCreditCards(@PathVariable Long id, @RequestBody Money balance) {
-        return creditCardService.updateCreditCardsBalance(id, balance);
+    public CreditCards updateCreditCards(@PathVariable Long id, @RequestBody CreditCards creditCards) {
+        return creditCardService.updateCreditCardsBalance(id, creditCards);
     }
 
     @GetMapping("/creditcards/getall")

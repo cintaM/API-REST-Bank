@@ -48,10 +48,14 @@ public class CreditCardsService {
     }
 
 
-    public CreditCards deleteCreditCards(Long id) {
-        CreditCards creditCards = creditCardsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return creditCardsRepository.delete(creditCards);
-    };
+    public void deleteCreditCards(CreditCards creditCards) {
+        if (!creditCardsRepository.findById(creditCards.getId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
+        creditCardsRepository.delete(creditCards);
+    }
+
 
 
     public List<CreditCards> getAllCreditCards(){
@@ -59,8 +63,15 @@ public class CreditCardsService {
     }
 
     public CreditCards getOneCreditCards(Long id){
-        CreditCards creditCards = creditCardsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return creditCards;
+        return creditCardsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+
+    public CreditCards updateChecking(Long id, CreditCards creditCards) {
+        if (!creditCardsRepository.findById(id).isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        creditCards.setId(id);
+        return creditCardsRepository.save(creditCards);
     }
 
 

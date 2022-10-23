@@ -52,10 +52,14 @@ public class CheckingService {
     }
 
 
-     public Checking deleteChecking(Long id) {
-        Checking checking = checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return checkingRepository.delete(checking);
-     };
+     public void deleteChecking(Checking checking) {
+            if (!checkingRepository.findById(checking.getId()).isPresent()) {
+             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+         }
+
+         checkingRepository.delete(checking);
+     }
+
 
 
         public List<Checking> getAllChecking(){
@@ -63,11 +67,14 @@ public class CheckingService {
         }
 
         public Checking getOneChecking(Long id){
-            Checking checking = checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            return checking;
+            return checkingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         }
 
 
-
-
+      public Checking updateChecking(Long id, Checking checking) {
+          if (!checkingRepository.findById(id).isPresent())
+              throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+          checking.setId(id);
+          return checkingRepository.save(checking);
+      }
 }

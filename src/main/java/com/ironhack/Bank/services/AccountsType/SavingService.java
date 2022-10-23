@@ -1,6 +1,7 @@
 package com.ironhack.Bank.services.AccountsType;
 
 import com.ironhack.Bank.controllers.DTOs.SavingDTO;
+import com.ironhack.Bank.entity.AccountsType.Checking;
 import com.ironhack.Bank.entity.AccountsType.Saving;
 import com.ironhack.Bank.entity.Embeddable.Money;
 import com.ironhack.Bank.entity.UsersType.Holders;
@@ -40,26 +41,37 @@ public class SavingService {
     };
 
     public Saving updateSavingBalance(Long id, Money balance) {
-        Saving checking = savingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        checking.setBalance(balance);
-        return savingRepository.save(checking);
+        Saving saving = savingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        saving.setBalance(balance);
+        return savingRepository.save(saving;
 
     }
 
 
-    public Saving deleteSaving(Long id) {
-        Saving saving = savingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return savingRepository.delete(saving);
-    };
+    public void deleteSaving(Saving saving) {
+        if (!savingRepository.findById(saving.getId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
+        savingRepository.delete(saving);
+    }
 
 
-    public List<Saving> getAllSaving(){
+
+    public List<Saving> getAllChecking(){
         return savingRepository.findAll();
     }
 
-    public Saving getOneSaving(Long id, Saving saving){
-        Saving saving = savingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return saving;
+    public Saving getOneChecking(Long id){
+        return savingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+
+    public Saving updateChecking(Long id, Saving saving) {
+        if (!savingRepository.findById(id).isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        saving.setId(id);
+        return savingRepository.save(saving);
     }
 
 

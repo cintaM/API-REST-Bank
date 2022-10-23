@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -31,13 +32,13 @@ public class SavingController implements SavingControllerInterface {
 
 
     @PatchMapping("/saving/{id}")
-    public SavingDTO updateCreditCardsBalance(@PathVariable Long id, @RequestBody Money balance) {
-        return savingService.updateSavingBalance(id, balance);
+    public Saving updateSavingBalance(@PathVariable Long id, @RequestBody Long balance) {
+        return savingService.updateSavingBalance(id, new Money(BigDecimal.valueOf(balance)));
     }
 
-    @DeleteMapping("/saving/delete/{id}")
-    public Saving deleteCreditCards(@PathVariable Long id) {
-        return savingService.deleteSaving(id);
+    @DeleteMapping("/saving/delete/")
+    public Saving deleteCreditCards() {
+        return savingService.deleteSaving();
     }
 
     @GetMapping("/thirdparty/getall")
@@ -46,7 +47,7 @@ public class SavingController implements SavingControllerInterface {
     }
 
     @GetMapping("/thirdparty/get/{id}")
-    public Saving getOneSaving(@PathVariable Long id, @RequestBody Saving saving){
-        return  savingService.getOneSaving(id, saving);
+    public Saving getOneSaving(@PathVariable Long id){
+        return  savingService.getOneSaving(id);
     }
 }

@@ -32,8 +32,8 @@ public class ThirdPartyController implements ThirdPartyControllerInterface {
 
 
     @DeleteMapping("/thirdparty/delete/")
-    public ThirdParty deleteThirdParty(@RequestBody ThirdParty thirdParty) {
-        return thirdPartyService.deleteThirdParty(thirdParty);
+    public void deleteThirdParty(@RequestBody ThirdParty thirdParty) {
+         thirdPartyService.deleteThirdParty(thirdParty);
     }
 
 

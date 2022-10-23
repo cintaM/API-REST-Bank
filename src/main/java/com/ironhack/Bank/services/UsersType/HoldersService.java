@@ -44,10 +44,13 @@ public class HoldersService implements HoldersServiceInterface {
     }
 
 
-    public Holders deleteHolders(Long id) {
-        Holders holders = holdersRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return holdersRepository.delete(holders);
-    };
+    public void deleteHolder(Holders holders) {
+        if (!holdersRepository.findById(holders.getId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
+        holdersRepository.delete(holders);
+    }
 
 
     public List<Holders> getAllHolders(){

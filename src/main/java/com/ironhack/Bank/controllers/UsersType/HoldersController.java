@@ -22,7 +22,7 @@ public class HoldersController implements HoldersControllerInterface {
     @PostMapping("/holder/add")
     @ResponseStatus(HttpStatus.CREATED)
     public Holders addHolder(@RequestBody Holders holders)  {
-        return holdersService.addHolders(holders);
+        return holdersService.addHolder(holders);
 
     }
 
@@ -33,14 +33,14 @@ public class HoldersController implements HoldersControllerInterface {
     }
 
     @DeleteMapping("/holder/delete/")
-    public Holders deleteHolder(@RequestBody Holders holders) {
-        return holdersService.deleteHolder(holders);
+    public void deleteHolder(@RequestBody Holders holders) {
+        holdersService.deleteHolder(holders);
     }
 
 
   @GetMapping("/holder/getall")
     public List<Holders> getAllHolder(){
-        return holdersService.GetAllHolder();
+        return holdersService.getAllHolder();
   }
 
   @GetMapping("/holder/get/{id}")

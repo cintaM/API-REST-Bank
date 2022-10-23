@@ -17,6 +17,6 @@ public interface SavingServiceInterface {
     Saving  getOneSaving(Long id, SavingDTO savingDTO);
     List< Saving > getAllSaving();
 
-    Saving  updateSaving(Long id, Money balance);
+    Saving  updateSaving(Long id, Saving saving);
 
 }

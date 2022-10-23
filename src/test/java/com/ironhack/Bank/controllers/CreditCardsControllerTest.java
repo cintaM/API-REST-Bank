@@ -23,14 +23,12 @@ import java.time.LocalDate;
 
 import static java.math.BigDecimal.valueOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
 public class CreditCardsControllerTest {
-
 
     @Autowired
     CreditCardsRepository creditCardRepository;
@@ -48,7 +46,7 @@ public class CreditCardsControllerTest {
     Holders holder1;
     @BeforeEach
     public void setUp() {
-            mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
 
 
@@ -56,17 +54,8 @@ public class CreditCardsControllerTest {
 
     }
 
-   /* @Test
-    void get_All_OK() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/product")).andExpect(status().isOk()).andReturn();
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("Super Smash Bros"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("49.99"));
 
-        System.out.println(mvcResult.getResponse().getContentAsString());
 
-    }
-
-    */
 
     @Test
     void post_CreditCards_isCreated() throws Exception {
@@ -77,13 +66,60 @@ public class CreditCardsControllerTest {
         String body = objectMapper.writeValueAsString(creditCard1);
         System.out.println(body);
 
-        MvcResult mvcResult =mockMvc.perform(post("/creditcards").content(body).contentType(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult =mockMvc.perform(post("/creditcards/add").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
         assertTrue(creditCardRepository.findById(2L).isPresent());
 
     }
 
+    @Test
+    void get_All_OK() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/creditcard/getall")).andExpect(status().isOk()).andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("0.2"));
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+
+    }
+
+    @Test
+    void get_ById_OK() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/creditcard/getone/1")).andExpect(status().isOk()).andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("0.2"));
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+
+    }
+
+    @Test
+    void get_SetBalance_OK() throws Exception {
+        holder1 = holdersRepository.save(new Holders("Daniel", LocalDate.of(1985, 6, 26), new PrimaryAddress("ere", 2, "Barcelona"),
+                "ijil@gjdj.com"));
+
+        CreditCards creditCard1 = creditCardRepository.save(new CreditCards(new Money(BigDecimal.valueOf(1000)), holder1, holder1, BigDecimal.valueOf(2.25), new Money(BigDecimal.valueOf(654)), BigDecimal.valueOf(200)));
+        creditCard1.setBalance(new Money(BigDecimal.valueOf(250)));
+        MvcResult mvcResult = mockMvc.perform(patch("/creditcard/patch/1")).andExpect(status().isOk()).andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("250"));
+    }
+
+    @Test
+    void Delete_OK() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(delete("/creditcard/delete/1")).andExpect(status().isOk()).andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("0.2"));
+
+
+    }
+
+    @Test
+    void Put_OK() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(put("/creditcard/put/1")).andExpect(status().isOk()).andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("0.2"));
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+
+    }
 
 
 }

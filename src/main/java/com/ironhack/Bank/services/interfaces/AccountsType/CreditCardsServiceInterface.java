@@ -12,15 +12,15 @@ import java.util.Optional;
 public interface CreditCardsServiceInterface {
     CreditCards addCreditCards(CreditDTO creditDTO);
 
-    CreditCards updateCreditCardsBalance(Long id, Money balance);
+    CreditCards updateCreditCardsBalance(Long id, Long balance);
 
-    CreditCards deleteCreditCards(CreditCards creditCards);
+    void deleteCreditCards();
 
 
     CreditCards  getOneCreditCards(Long id, CreditDTO creditDTO);
     List<CreditCards > getAllCreditCards();
 
-    CreditCards  updateCreditCars(Long id, Money balance);
+    CreditCards  updateCreditCars(Long id, CreditCards creditCards);
 
 
 }

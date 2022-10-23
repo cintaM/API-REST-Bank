@@ -32,11 +32,13 @@ public class ThirdPartyService implements ThirdPartyServiceInterface {
     };
 
 
-    public ThirdParty deleteThirdParty(Long id) {
-        ThirdParty thirdParty = thirdPartyRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return thirdPartyRepository.delete(thirdParty);
-    };
+    public void deleteThirdParty(ThirdParty thirdParty) {
+        if (!thirdPartyRepository.findById(thirdParty.getId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
 
+        thirdPartyRepository.delete(thirdParty);
+    }
 
     public List<ThirdParty> getAllThirdParty(){
         return thirdPartyRepository.findAll();
