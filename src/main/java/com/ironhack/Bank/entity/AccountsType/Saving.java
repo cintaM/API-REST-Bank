@@ -28,10 +28,7 @@ public class Saving extends Accounts {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "admins_id")
-    Admins admins;
+
     @DecimalMax("0.5")
     private BigDecimal interestRate;
 
@@ -45,7 +42,6 @@ public class Saving extends Accounts {
         this.secretKey = secretKey;
         this.minimumBalance = minimumBalance;
         this.status = status;
-        this.admins = admins;
         this.interestRate = interestRate;
     }
 

@@ -24,12 +24,6 @@ public class CreditCards extends Accounts {
    @DecimalMin("0.1")
     private BigDecimal interestRate;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "admins_id")
-    Admins admins;
-
-
     public CreditCards() {
     }
 

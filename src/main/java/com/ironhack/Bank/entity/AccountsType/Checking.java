@@ -20,18 +20,13 @@ public class Checking extends Accounts {
             @AttributeOverride(name = "amount", column = @Column(name = "minimum_balance")),
             @AttributeOverride(name = "currency", column = @Column(name = "minimum_balance_currency"))
     })
-    private Money minimumBalance ;
+    private Money minimumBalance;
     private BigDecimal monthlyMaintenanceFee;
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @Enumerated(EnumType.STRING)
     private Types types;
-
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "admins_id")
-    Admins admins;
 
 
     public Checking() {
@@ -88,4 +83,14 @@ public class Checking extends Accounts {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public Types getTypes() {
+        return types;
+    }
+
+    public void setTypes(Types types) {
+        this.types = types;
+    }
 }
+
+

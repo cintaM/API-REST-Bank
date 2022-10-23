@@ -45,9 +45,6 @@ public class ThirdPartyControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
 
-
-
-
     }
 
 
@@ -87,7 +84,6 @@ public class ThirdPartyControllerTest {
     @Test
     void Delete_OK() throws Exception {
         MvcResult mvcResult = mockMvc.perform(delete("/thirdparty/delete/1")).andExpect(status().isOk()).andReturn();
-
 
         System.out.println(mvcResult.getResponse().getContentAsString());
 
